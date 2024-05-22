@@ -7,6 +7,11 @@ public class MainApp {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
 
+        //Add and set the Game Panel to the window/ jFrame
+        GamePanel gamePanel = new GamePanel();
+        window.add(gamePanel);
+        window.pack();
+
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
