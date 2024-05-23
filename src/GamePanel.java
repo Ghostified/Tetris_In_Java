@@ -11,6 +11,9 @@ public class GamePanel  extends JPanel implements Runnable{
     final int FPS = 60; //refresh rate of the screen per second
     Thread gameThread; // thread to run the game loop
 
+    //Instantiate the PlayManager class
+    PlayManager playManager = new PlayManager();
+
 
 
     public GamePanel() {
@@ -54,13 +57,16 @@ public class GamePanel  extends JPanel implements Runnable{
 
     //Method to update the game
     private void update() {
-        //Update objects in the game, i.e number information
+        //call playManager update method
+        playManager.update();
         
     }
 
     public void paintComponent (Graphics g) {
+        //parsre the graphics object to the playManager draw method
         super.paintComponent(g);
-        //Draw the game - update ui text 
+        Graphics g2 = (Graphics) g;
+        playManager.draw(g2);
     }
 
 }

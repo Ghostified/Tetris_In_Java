@@ -1,3 +1,38 @@
+// Purpose: Handling the basic game elements
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 public class PlayManager {
 
+    //main play area
+    final int WIDTH = 360;
+    final int HEIGHT = 600;
+    public static int left_x;
+    public static int right_x;
+    public static int top_y;
+    public static int bottom_y;
+
+    //constructor 
+    public PlayManager () {
+        //main play area frame
+        left_x = (GamePanel.WIDTH/2) - (WIDTH/2);  //1280/2 - 360/2 = 460
+        right_x = left_x + WIDTH; //460 + 360 = 820
+        top_y = 50;
+        bottom_y = top_y + HEIGHT; //50 + 600 = 650
+    }
+
+    public void update () {
+
+    }
+
+    public void draw (Graphics2D g2) {
+        //Draw the main play area 
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(4f));
+        g2.drawRect(left_x - 4, top_y -4, WIDTH + 8, HEIGHT + 8);
+  
+    }
 }
