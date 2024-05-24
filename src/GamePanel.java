@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
@@ -22,6 +23,8 @@ public class GamePanel  extends JPanel implements Runnable{
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setBackground(Color.BLACK);
         this.setLayout(null);
+
+        playManager = new PlayManager();
     }
 
     //loop to run the game
@@ -65,10 +68,10 @@ public class GamePanel  extends JPanel implements Runnable{
     public void paintComponent (Graphics g) {
         //parsre the graphics object to the playManager draw method
         super.paintComponent(g);
-        Graphics g2 = (Graphics) g;
-        playManager.draw(g2);
 
-        //This is a weird update 
+        //call the draw method
+        Graphics2D g2 = (Graphics2D)g;
+        playManager.draw(g2);
     }
 
 }
