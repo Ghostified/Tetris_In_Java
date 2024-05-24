@@ -67,6 +67,8 @@ public class GamePanel  extends JPanel implements Runnable{
         super.paintComponent(g);
         Graphics g2 = (Graphics) g;
         playManager.draw(g2);
+
+        //This is a weird update 
     }
 
 }
