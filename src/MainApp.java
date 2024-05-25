@@ -17,7 +17,4 @@ public class MainApp {
 
     }
     
-    // public Block (Color c) {
-    //     this.c = c;
-    // }
 }
