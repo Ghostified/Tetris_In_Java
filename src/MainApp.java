@@ -16,4 +16,8 @@ public class MainApp {
         window.setVisible(true);
 
     }
+    
+    // public Block (Color c) {
+    //     this.c = c;
+    // }
 }
