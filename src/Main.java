@@ -1,6 +1,7 @@
 import javax.swing.JFrame;
+import GameManager.*;
 
-public class MainApp {
+public class Main {
     
     public static void main(String[] args) throws Exception {
         
@@ -15,6 +16,9 @@ public class MainApp {
 
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+
+
+        gamePanel.launchGame();
 
     }
     

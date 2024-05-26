@@ -1,3 +1,5 @@
+package GameManager;
+
 // Purpose: Handling the basic game elements
 
 import java.awt.BasicStroke;
@@ -27,6 +29,9 @@ public class PlayManager {
     final int MINO_START_X;
     final int MINO_START_Y;
 
+    //others
+    public static int dropInterval = 60; //mino drops every 60 frames or 1 second 
+
     //constructor 
     public PlayManager () {
         //main play area frame
@@ -44,7 +49,6 @@ public class PlayManager {
     }
 
     public void update () {
-
         currentMino.update();
 
     }
