@@ -27,6 +27,42 @@ public class Mino {
     public void setXY (int x, int y) {}
     public void updateXY (int direction) {}
     public void update () {
+
+        //move the mino left, right, down or up based on the key pressed
+        if (KeyHandler.leftPressed) {
+            b[0].x -= Block.SIZE;
+            b[1].x -= Block.SIZE;
+            b[2].x -= Block.SIZE;
+            b[3].x -= Block.SIZE;
+
+            KeyHandler.leftPressed = false;
+        
+        }
+        if (KeyHandler.rightPressed) {
+            b[0].x += Block.SIZE;
+            b[1].x += Block.SIZE;
+            b[2].x += Block.SIZE;
+            b[3].x += Block.SIZE;
+
+            KeyHandler.rightPressed = false;
+        }
+        if (KeyHandler.downPressed) {
+
+            //If the down key is pressed the mino should move downwards by one block 
+            b[0] . y += Block.SIZE;
+            b[1] . y += Block.SIZE;
+            b[2] . y += Block.SIZE;
+            b[3] . y += Block.SIZE;
+
+            //reset the auto drop counter
+            autoDropCounter = 0;
+            KeyHandler.downPressed = false;
+        }
+        if (KeyHandler.upPressesd) {
+
+        }
+
+
         //drop the mino every 60 frames
         autoDropCounter++;
         if (autoDropCounter == PlayManager.dropInterval) { // Use the comparison operator '==' instead of '='
