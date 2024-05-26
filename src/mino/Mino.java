@@ -1,13 +1,17 @@
 package mino;
+import GameManager.*;
+
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+
 
 //super class for all Tetro Minos
 public class Mino {
 
     public Block b [] = new Block[4];
     public Block tempB [] = new Block[4];
+    int autoDropCounter = 0;
 
     public void create (Color c ) {
         b[0] = new Block(c);
@@ -23,8 +27,18 @@ public class Mino {
     public void setXY (int x, int y) {}
     public void updateXY (int direction) {}
     public void update () {
+        //drop the mino every 60 frames
+        autoDropCounter++;
+        if (autoDropCounter == PlayManager.dropInterval) { // Use the comparison operator '==' instead of '='
+            b[0].y += Block.SIZE;
+            b[1].y += Block.SIZE;
+            b[2].y += Block.SIZE;
+            b[3].y += Block.SIZE;
+            autoDropCounter = 0;
+        }
 
     }
+
     public void draw (Graphics2D g2) {
         int margin = 2;
         g2.setColor(b[0].c);
