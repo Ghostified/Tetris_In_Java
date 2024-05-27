@@ -26,6 +26,10 @@ public class GamePanel  extends JPanel implements Runnable{
         this.setBackground(Color.BLACK);
         this.setLayout(null);
 
+        //Adding the key listener to the panel to listen to the key events that moves the mino
+        this.addKeyListener(new KeyHandler());
+        this.setFocusable(true);
+
         playManager = new PlayManager();
     }
 
