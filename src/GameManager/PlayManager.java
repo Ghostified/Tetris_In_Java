@@ -96,6 +96,14 @@ public class PlayManager {
         if (currentMino != null) {
             currentMino.draw(g2);
         }
-  
+
+        //draw a pause feature
+        g2.setColor(Color.YELLOW);
+        g2.setFont(g2.getFont().deriveFont(50f));
+        if (KeyHandler.pausedPressed) {
+            x = left_x + 70;
+            y = top_y + 320;
+            g2.drawString("PAUSED", x, y);
+        }
     }
 }

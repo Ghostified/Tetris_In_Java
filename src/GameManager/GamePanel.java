@@ -66,8 +66,11 @@ public class GamePanel  extends JPanel implements Runnable{
 
     //Method to update the game
     private void update() {
-        //call playManager update method
-        playManager.update();
+        //call playManager update method 
+        //we only update the screen information if the game is not paused
+        if (KeyHandler.pausedPressed == false) {
+            playManager.update();
+        }
         
     }
 
