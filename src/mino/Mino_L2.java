@@ -32,7 +32,7 @@ public class Mino_L2 extends Mino {
         tempB[0].x = b[0].x;
         tempB[0].y = b[0].y;
         tempB[1].x = b[0].x;
-        tempB[1].x = b[0].y - Block.SIZE; //note , error might occur alternative tempB[1].y = b[0].y - Block.SIZE;
+        tempB[1].y = b[0].y - Block.SIZE; //note , error might occur alternative tempB[1].y = b[0].y - Block.SIZE;
         tempB[2].x = b[0].x;
         tempB[2].y = b[0].y + Block.SIZE;
         tempB[3].x = b[0].x - Block.SIZE;
@@ -47,9 +47,9 @@ public class Mino_L2 extends Mino {
         tempB[0].x = b[0].x;
         tempB[0].y = b[0].y;
         tempB[1].x = b[0].x + Block.SIZE;
-        tempB[1].x = b[0].y;
+        tempB[1].y = b[0].y;
         tempB[2].x = b[0].x - Block.SIZE;
-        tempB[2].y = b[0].y + Block.SIZE;
+        tempB[2].y = b[0].y;
         tempB[3].x = b[0].x  - Block.SIZE;
         tempB[3].y = b[0].y + Block.SIZE;
 
@@ -64,7 +64,7 @@ public class Mino_L2 extends Mino {
         tempB[0].x = b[0].x;
         tempB[0].y = b[0].y;
         tempB[1].x = b[0].x;
-        tempB[1].x = b[0].y + Block.SIZE;
+        tempB[1].y = b[0].y + Block.SIZE;
         tempB[2].x = b[0].x;
         tempB[2].y = b[0].y - Block.SIZE;
         tempB[3].x = b[0].x + Block.SIZE;
@@ -80,13 +80,13 @@ public class Mino_L2 extends Mino {
         tempB[0].x = b[0].x;
         tempB[0].y = b[0].y;
         tempB[1].x = b[0].x - Block.SIZE;
-        tempB[1].x = b[0].y;
+        tempB[1].y = b[0].y;
         tempB[2].x = b[0].x + Block.SIZE;
         tempB[2].y = b[0].y;
         tempB[3].x = b[0].x + Block.SIZE;
         tempB[3].y = b[0].y  + Block.SIZE;
         
-        updateXY(direction);
+        updateXY(4);
     }
 
 
