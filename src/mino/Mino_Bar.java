@@ -65,7 +65,7 @@ public class Mino_Bar extends  Mino {
         //
 
         getDirection1();
-        updateXY(3);
+        //updateXY(3);
     }
     public void getDirection4 () {
         // o
@@ -74,6 +74,6 @@ public class Mino_Bar extends  Mino {
         // o
 
         getDirection2();
-        updateXY(4);
+        //updateXY(4);
     }
  }

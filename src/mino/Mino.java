@@ -13,6 +13,7 @@ public class Mino {
     public Block tempB [] = new Block[4];
     int autoDropCounter = 0;
     public int direction  = 1;  //There are four directions for each mino (1,2,3,4)
+    boolean leftCollision,  rightCollisison, bottomCollisison;
 
 
     public void create (Color c ) {
@@ -45,40 +46,44 @@ public class Mino {
     public void getDirection2 () {}
     public void getDirection3 () {}
     public void getDirection4 () {}
+    public void checkMovementCollisison () {
+
+        //prevent collision
+
+        leftCollision  = false;
+        rightCollisison  = false;
+        bottomCollisison  = false;
+
+        //Check Frame collisionb
+        //Left wall
+        for (int i =0; i < b.length; i++) {
+            if (b[i].x == PlayManager.left_x) {
+                leftCollision = true;
+            }
+        }
+
+        //Right Wall
+        for (int i =0; i < b.length; i++) {
+            if (b[i].x + Block.SIZE == PlayManager.right_x){
+                rightCollisison = true;
+            }
+        }
+
+        //Bottom Floor
+        for (int i = 0; i < b.length; i++) {
+            if (b[i].y + Block.SIZE == PlayManager.bottom_y) {
+                bottomCollisison = true;
+            }
+        }
+
+    }
+    public void checkRotationCollisison () {}
+
 
 
     public void update () {
 
         //move the mino left, right, down or up based on the key pressed
-        if (KeyHandler.leftPressed) {
-            b[0].x -= Block.SIZE;
-            b[1].x -= Block.SIZE;
-            b[2].x -= Block.SIZE;
-            b[3].x -= Block.SIZE;
-
-            KeyHandler.leftPressed = false;
-        
-        }
-        if (KeyHandler.rightPressed) {
-            b[0].x += Block.SIZE;
-            b[1].x += Block.SIZE;
-            b[2].x += Block.SIZE;
-            b[3].x += Block.SIZE;
-
-            KeyHandler.rightPressed = false;
-        }
-        if (KeyHandler.downPressed) {
-
-            //If the down key is pressed the mino should move downwards by one block 
-            b[0] . y += Block.SIZE;
-            b[1] . y += Block.SIZE;
-            b[2] . y += Block.SIZE;
-            b[3] . y += Block.SIZE;
-
-            //reset the auto drop counter
-            autoDropCounter = 0;
-            KeyHandler.downPressed = false;
-        }
         if (KeyHandler.upPressesd) {
 
             //handles minos direction change
@@ -90,6 +95,54 @@ public class Mino {
             } 
             KeyHandler.upPressesd = false ;
         }
+
+        checkMovementCollisison();
+
+        if (KeyHandler.downPressed) {
+
+            //If the down key is pressed the mino should move downwards by one block 
+            //If the mino 's bottom is not hitting, it can go down 
+            if (bottomCollisison == false) {
+                b[0] . y += Block.SIZE;
+                b[1] . y += Block.SIZE;
+                b[2] . y += Block.SIZE;
+                b[3] . y += Block.SIZE;
+    
+                //when moved down, reset the auto drop counter
+                autoDropCounter = 0;
+            }
+
+            KeyHandler.downPressed = false;
+        }
+
+
+        if (KeyHandler.leftPressed) {
+
+            if (leftCollision == false ) { //check first for left collision
+
+                b[0].x -= Block.SIZE;
+                b[1].x -= Block.SIZE;
+                b[2].x -= Block.SIZE;
+                b[3].x -= Block.SIZE;
+            }
+
+            KeyHandler.leftPressed = false;
+        
+        }
+        if (KeyHandler.rightPressed) {
+
+            //check first for collision with the right wall 
+            if (rightCollisison == false) {
+
+                b[0].x += Block.SIZE;
+                b[1].x += Block.SIZE;
+                b[2].x += Block.SIZE;
+                b[3].x += Block.SIZE;
+            }
+
+            KeyHandler.rightPressed = false;
+        }
+
         //drop the mino every 60 frames
         autoDropCounter++;
         if (autoDropCounter == PlayManager.dropInterval) { // Use the comparison operator '==' instead of '='
