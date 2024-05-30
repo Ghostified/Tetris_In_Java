@@ -13,7 +13,9 @@ public class Mino {
     public Block tempB [] = new Block[4];
     int autoDropCounter = 0;
     public int direction  = 1;  //There are four directions for each mino (1,2,3,4)
-    boolean leftCollision,  rightCollisison, bottomCollisison;
+    boolean leftCollision,  rightCollisison, bottomCollisison; //prevent  frame collision 
+    public boolean active = true; //to activate or deativate a mino when it hits the bottom of the frame
+
 
 
     public void create (Color c ) {
@@ -30,15 +32,21 @@ public class Mino {
     public void setXY (int x, int y) {}
     public void updateXY (int direction) {
 
-        this.direction = direction;
-        b[0].x = tempB[0].x;
-        b[0].y = tempB[0].y;
-        b[1].x = tempB[1].x;
-        b[1].y = tempB[1].y;
-        b[2].x = tempB[2].x;
-        b[2].y = tempB[2].y;
-        b[3].x = tempB[3].x;
-        b[3].y = tempB[3].y;
+        //Check for collission before rotation
+        checkRotationCollisison();
+
+        if (leftCollision == false && rightCollisison == false && bottomCollisison == false) {
+
+            this.direction = direction;
+            b[0].x = tempB[0].x;
+            b[0].y = tempB[0].y;
+            b[1].x = tempB[1].x;
+            b[1].y = tempB[1].y;
+            b[2].x = tempB[2].x;
+            b[2].y = tempB[2].y;
+            b[3].x = tempB[3].x;
+            b[3].y = tempB[3].y;
+        }
     }
 
     //These methods are used to get the direction of the mino
@@ -77,7 +85,35 @@ public class Mino {
         }
 
     }
-    public void checkRotationCollisison () {}
+    //Method to check collision withthe frame during mino movement
+    public void checkRotationCollisison () {
+
+        leftCollision = false;
+        rightCollisison = false;
+        bottomCollisison = false;
+
+        //left wall 
+        for (int i =0; i < b.length; i++) {
+            if (tempB [i] .x < PlayManager.left_x) {
+                leftCollision = true;
+            }
+        }
+
+        //right wall
+        for (int i = 0; i < b.length; i++) {
+            if (tempB [i] .x  + Block.SIZE > PlayManager.right_x) {
+                rightCollisison = true;
+            }
+        }
+
+        //bottom collision
+        for (int i = 0; i < b.length; i++) {
+            if (tempB[i].y + Block.SIZE > PlayManager.bottom_y) {
+                bottomCollisison = true;
+            }
+        }
+
+    }
 
 
 
@@ -143,14 +179,23 @@ public class Mino {
             KeyHandler.rightPressed = false;
         }
 
+        //Method to prevent to activate a block 
+        if (bottomCollisison ) {
+            active = false;
+        }
+        else {
+
         //drop the mino every 60 frames
         autoDropCounter++;
+        
         if (autoDropCounter == PlayManager.dropInterval) { // Use the comparison operator '==' instead of '='
             b[0].y += Block.SIZE;
             b[1].y += Block.SIZE;
             b[2].y += Block.SIZE;
             b[3].y += Block.SIZE;
             autoDropCounter = 0;
+            
+        }
         }
 
     }
