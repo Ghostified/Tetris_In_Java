@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.time.chrono.MinguoChronology;
+import java.util.ArrayList;
 import java.util.Random;
 
 import mino.Block;
@@ -36,6 +37,12 @@ public class PlayManager {
     final int MINO_START_X;
     final int MINO_START_Y;
 
+    //Initialize next mino
+    Mino nextMino;
+    final int NEXTMINO_X;
+    final int NEXTMINO_Y;
+    public static ArrayList <Block> staticBlocks = new ArrayList<>();
+
     //others
     public static int dropInterval = 60; //mino drops every 60 frames or 1 second 
 
@@ -50,9 +57,14 @@ public class PlayManager {
         MINO_START_X = left_x + (WIDTH/2) - Block.SIZE;
         MINO_START_Y = top_y + Block.SIZE;
 
+        NEXTMINO_X = right_x + 175;
+        NEXTMINO_Y = top_y + 500;
+
         //set the satrting mino
         currentMino = pickMino ();
         currentMino.setXY(MINO_START_X, MINO_START_Y);
+        nextMino = pickMino();
+        nextMino.setXY(NEXTMINO_X, NEXTMINO_Y);
     }
 
     private Mino pickMino () {
@@ -96,6 +108,10 @@ public class PlayManager {
         if (currentMino != null) {
             currentMino.draw(g2);
         }
+
+        //Draw the next mino
+        nextMino.draw(g2);
+
 
         //draw a pause feature
         g2.setColor(Color.YELLOW);
