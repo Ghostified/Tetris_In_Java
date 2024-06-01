@@ -15,6 +15,8 @@ public class Mino {
     public int direction  = 1;  //There are four directions for each mino (1,2,3,4)
     boolean leftCollision,  rightCollisison, bottomCollisison; //prevent  frame collision 
     public boolean active = true; //to activate or deativate a mino when it hits the bottom of the frame
+     public boolean deactivating;
+    int deactivateCounter = 0;
 
 
 
@@ -54,6 +56,7 @@ public class Mino {
     public void getDirection2 () {}
     public void getDirection3 () {}
     public void getDirection4 () {}
+
     public void checkMovementCollisison () {
 
         //prevent collision
@@ -61,6 +64,9 @@ public class Mino {
         leftCollision  = false;
         rightCollisison  = false;
         bottomCollisison  = false;
+
+        //call the static block collision
+        checkStaticCollision();
 
         //Check Frame collisionb
         //Left wall
@@ -92,6 +98,9 @@ public class Mino {
         rightCollisison = false;
         bottomCollisison = false;
 
+        //call the static block collision
+        checkStaticCollision();
+
         //left wall 
         for (int i =0; i < b.length; i++) {
             if (tempB [i] .x < PlayManager.left_x) {
@@ -115,9 +124,42 @@ public class Mino {
 
     }
 
+    //collision check for the ststic blocks 
+    private void checkStaticCollision () {
+        for (int i = 0; i < PlayManager.staticBlocks.size(); i++) {
+
+            int targetX = PlayManager.staticBlocks.get(i).x;
+            int targetY = PlayManager.staticBlocks.get(i).y;
+
+            //check Down
+            for (int ii = 0; ii < b.length; ii++) {
+                if (b[ii].y + Block.SIZE == targetY && b[ii]. x == targetX){
+                    bottomCollisison = true;
+                }
+            }
+
+            //Check left
+            for (int ii =0; ii< b.length; ii++) {
+                if (b[ii].x - Block.SIZE == targetX && b[ii].y == targetY){
+                    bottomCollisison = true;
+                }
+            }
+
+            //Check right
+            for (int ii =0; ii < b.length; ii++) {
+                if (b[ii].x + Block.SIZE == targetX && b[ii].y == targetY) {
+                    rightCollisison = true;
+                }
+            }
+        }
+    }
 
 
     public void update () {
+
+        if (deactivating) {
+            deactivating();
+        }
 
         //move the mino left, right, down or up based on the key pressed
         if (KeyHandler.upPressesd) {
@@ -133,6 +175,7 @@ public class Mino {
         }
 
         checkMovementCollisison();
+        //checkStaticCollision();
 
         if (KeyHandler.downPressed) {
 
@@ -181,13 +224,10 @@ public class Mino {
 
         //Method to prevent to activate a block 
         if (bottomCollisison ) {
-            active = false;
+            deactivating = true;
         }
         else {
-
-        //drop the mino every 60 frames
-        autoDropCounter++;
-        
+        autoDropCounter++;     //drop the mino every 60 frames
         if (autoDropCounter == PlayManager.dropInterval) { // Use the comparison operator '==' instead of '='
             b[0].y += Block.SIZE;
             b[1].y += Block.SIZE;
@@ -198,6 +238,23 @@ public class Mino {
         }
         }
 
+    }
+
+    //method to deactivate mino if it reaches the bottom]
+    private void deactivating () {
+        deactivateCounter ++;
+
+        //wait for 45 fps untill deactivate
+        if (deactivateCounter == 45) {
+
+            deactivateCounter =0;
+            checkMovementCollisison(); // check if the bottom is still hitting
+
+            //if the bottom is still hiiting  after 45 fps, deactivate the mino
+            if (bottomCollisison) {
+                active = false;
+            }
+        }
     }
 
     public void draw (Graphics2D g2) {

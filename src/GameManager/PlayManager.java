@@ -45,6 +45,13 @@ public class PlayManager {
 
     //others
     public static int dropInterval = 60; //mino drops every 60 frames or 1 second 
+    boolean gameOver;
+
+    //Effect 
+    boolean effectCounterOn;
+    int effectCounter;
+    ArrayList <Integer> effectY = new ArrayList <> ();
+
 
     //constructor 
     public PlayManager () {
@@ -85,8 +92,86 @@ public class PlayManager {
     }
 
     public void update () {
-        currentMino.update();
 
+        //Check if currrentMino is active 
+        if (currentMino.active == false ) {
+            //if the current mino is not active , put it in the static blocks
+            staticBlocks.add(currentMino.b[0]);
+            staticBlocks.add(currentMino.b[1]);
+            staticBlocks.add(currentMino.b[2]);
+            staticBlocks.add(currentMino.b[3]);
+
+            //Check if the game is over
+            if (currentMino.b[0].x == MINO_START_X && currentMino.b[0].y == MINO_START_Y)  {
+                //this means the ccurrent mino has collided with the bblock and can not move at all
+                //its xy is similar to the the next mino
+                gameOver = true;
+            }
+
+            currentMino.deactivating = false;
+            
+            //replace the current mino with the next mino
+            currentMino = nextMino;
+            currentMino.setXY(MINO_START_X, MINO_START_Y);
+            nextMino = pickMino();
+            nextMino.setXY(NEXTMINO_X, NEXTMINO_Y);
+
+            //when mino becomes check if lines can be deleted
+            checkDelete();
+        }
+        else {
+            currentMino.update();
+        }
+    }
+
+    private void  checkDelete() {
+        //if the number of blocks in a line = 12 , we can then delete the lines
+
+        int x = left_x;
+        int y = top_y;
+        int blockCount = 0;
+
+        while (x < right_x && y < bottom_y) {
+
+            //scan the play area for static blocks and increase the block count
+            for (int i =0; i < staticBlocks.size(); i++) {
+                if (staticBlocks.get(i).x == x && staticBlocks.get(i). y == y) {
+                    //Increase the count if there is a ststic block
+                    blockCount++;
+                }
+            }
+            x += Block.SIZE;
+
+            if (x == right_x) {
+
+                //if the block count  is equal to 12 then the line is full of blocks 
+                //so we can delete the line
+                if (blockCount == 12) {
+
+                    //wWhen we delete a line, set the effectcounter to true
+                    effectCounterOn = true;
+                    effectY.add(y);
+
+                    for (int i = staticBlocks.size() -1; i > -1; i-- ) {
+                        //remove all blocks from the line
+                        if (staticBlocks.get(i).y == y) {
+                            staticBlocks.remove(i);
+                        }
+                    }
+
+                    //given a line has been deleted , all blocks above must be moved down tby one line
+                    for (int i = 0;  i < staticBlocks.size(); i++) {
+                        //if a block is above thr current y, move it down by a block size
+                        if (staticBlocks.get(i).y < y) {
+                            staticBlocks.get(i).y += Block.SIZE;
+                        }
+                    }
+                }
+                blockCount = 0;
+                x = left_x;
+                y += Block.SIZE;
+            }
+        }
     }
 
     public void draw (Graphics2D g2) {
@@ -112,14 +197,50 @@ public class PlayManager {
         //Draw the next mino
         nextMino.draw(g2);
 
+        //Draw the static blocks
+        for (int i =0; i < staticBlocks.size(); i++) {
+            staticBlocks.get(i).draw(g2);
+        }
+
+        //Draw the effect when lines are deleted 
+        if (effectCounterOn) {
+            effectCounter++;
+
+            //set color
+            g2.setColor(Color.pink);
+            for (int i = 0; i < effectY.size(); i++) {
+                g2.fillRect(left_x, effectY.get(i), WIDTH, Block.SIZE);
+            }
+
+            //When the timer hits 10 frames, reset everything on the scanned array 
+            if (effectCounter == 10) {
+                effectCounterOn = false;
+                effectCounter =0;
+                effectY.clear();
+            }
+        }
+
 
         //draw a pause feature
         g2.setColor(Color.YELLOW);
         g2.setFont(g2.getFont().deriveFont(50f));
-        if (KeyHandler.pausedPressed) {
+
+        //Game over text on the NEXT  panel
+        if (gameOver) {
+            x = left_x + 70;
+            y = top_y + 320;
+            g2.drawString("GAME OVER ", x, y);
+        }
+
+        //Pause  Game key handler and text
+        else if (KeyHandler.pausedPressed) {
             x = left_x + 70;
             y = top_y + 320;
             g2.drawString("PAUSED", x, y);
         }
+
+
+        //Draw the game Title
+        
     }
 }
