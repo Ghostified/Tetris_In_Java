@@ -13,10 +13,9 @@ public class GamePanel  extends JPanel implements Runnable{
     public static final int HEIGHT = 720;
     final int FPS = 60; //refresh rate of the screen per second
     Thread gameThread; // thread to run the game loop
-
-    //Instantiate the PlayManager class
-    PlayManager playManager = new PlayManager();
-
+    PlayManager playManager;
+    public static Sound music = new Sound ();
+    public static Sound soundEffect = new Sound ();
 
 
     public GamePanel() {
@@ -37,6 +36,10 @@ public class GamePanel  extends JPanel implements Runnable{
     public void launchGame() {
         gameThread = new Thread(this);
         gameThread.start();
+
+        //Play the background music
+        music.play(0, true);
+        music.loop();
     }
 
 
@@ -68,7 +71,7 @@ public class GamePanel  extends JPanel implements Runnable{
     private void update() {
         //call playManager update method 
         //we only update the screen information if the game is not paused
-        if (KeyHandler.pausedPressed == false) {
+        if (KeyHandler.pausedPressed == false && playManager.gameOver == false) {
             playManager.update();
         }
         
