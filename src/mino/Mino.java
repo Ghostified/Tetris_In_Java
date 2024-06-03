@@ -115,7 +115,7 @@ public class Mino {
             }
         }
 
-        //bottom collision
+        //bottom floor
         for (int i = 0; i < b.length; i++) {
             if (tempB[i].y + Block.SIZE > PlayManager.bottom_y) {
                 bottomCollisison = true;
@@ -141,7 +141,7 @@ public class Mino {
             //Check left
             for (int ii =0; ii< b.length; ii++) {
                 if (b[ii].x - Block.SIZE == targetX && b[ii].y == targetY){
-                    bottomCollisison = true;
+                    leftCollision = true;
                 }
             }
 
@@ -222,6 +222,9 @@ public class Mino {
 
             KeyHandler.rightPressed = false;
         }
+
+
+        //Problematic code
 
         //Method to prevent to activate a block 
         if (bottomCollisison ) {

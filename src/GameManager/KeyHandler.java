@@ -8,9 +8,7 @@ public class KeyHandler implements KeyListener {
     public static boolean upPressesd, downPressed, leftPressed, rightPressed, pausedPressed;
 
     @Override
-    public void keyTyped(KeyEvent e) {
-      
-    }
+    public void keyTyped(KeyEvent e) { }
 
     @Override
     //Logic to use the arrow keys to move the mino
@@ -45,9 +43,7 @@ public class KeyHandler implements KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-        
-    }
+    public void keyReleased(KeyEvent e) { }
 
     
 }
