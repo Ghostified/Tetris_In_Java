@@ -178,7 +178,7 @@ public class PlayManager {
                         if (dropInterval > 5) {
                             dropInterval -= 10;
                         } else  {
-                            dropInterval -=1;
+                            dropInterval -= 1;
                         }
                     }
 
@@ -218,7 +218,7 @@ public class PlayManager {
         g2.drawRect(x, y, 200, 200);
         g2.setFont (new Font("Arial", Font.PLAIN, 30));
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        g2.drawString("NEXT", x+60, y+60);
+        g2.drawString("NEXT", x + 60, y + 60);
 
         //Draw the score Frame
         g2.drawRect(x, top_y, 250, 300);
