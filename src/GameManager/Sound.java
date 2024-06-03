@@ -36,7 +36,7 @@ public class Sound {
 
             clip.open(ais);
             clip.addLineListener( new LineListener() {
-
+                @Override
                 public void update (LineEvent event) {
                     if (event.getType() == Type.STOP) {
                         clip.close();

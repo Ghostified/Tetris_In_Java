@@ -172,6 +172,7 @@ public class Mino {
                 case 4 : getDirection1(); break;
             } 
             KeyHandler.upPressesd = false ;
+            GamePanel.soundEffect.play(3, false);
         }
 
         checkMovementCollisison();
@@ -224,6 +225,9 @@ public class Mino {
 
         //Method to prevent to activate a block 
         if (bottomCollisison ) {
+            if (deactivating == false ) {
+                GamePanel. soundEffect.play(4, false);
+            }
             deactivating = true;
         }
         else {

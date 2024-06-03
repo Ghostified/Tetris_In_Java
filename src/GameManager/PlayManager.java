@@ -111,6 +111,8 @@ public class PlayManager {
                 //this means the ccurrent mino has collided with the bblock and can not move at all
                 //its xy is similar to the the next mino
                 gameOver = true;
+                GamePanel.music.stop();
+                GamePanel.soundEffect.play(2, false);
             }
 
             currentMino.deactivating = false;
@@ -197,6 +199,7 @@ public class PlayManager {
 
         //Add the score  based on the number of lines deleted
         if (lineCount > 0) {
+            GamePanel.soundEffect.play(1, false);
             int singleLineScore = 10 * level;
             scores += singleLineScore * lineCount;
         }
